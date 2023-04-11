@@ -22,24 +22,25 @@ public class VilleService implements IDao<Ville>{
 	@Override
 	public Ville save(Ville o) {
 		// TODO Auto-generated method stub
-		return null;
+		return villeRepository.save(o);
 	}
 
 	@Override
-	public void update(Ville o) {
+	public Ville update(int id, Ville villeUp) {
 		// TODO Auto-generated method stub
-		
+		Ville ville = villeRepository.findById(id);
+		ville.setNom(villeUp.getNom());
+		return villeRepository.save(ville);
 	}
 
 	@Override
-	public void delete(Ville o) {
+	public void delete(int id) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public Ville findById(int id) {
-		// TODO Auto-generated method stub villeRepository.finById(id);
+		// TODO Auto-generated method stub 
 		return villeRepository.findById(id);
 	}
 
@@ -49,4 +50,8 @@ public class VilleService implements IDao<Ville>{
 		return villeRepository.findAll();
 	}
 
+	public Ville getVilleById(int id) {
+		// TODO Auto-generated method stub
+        return villeRepository.findById(id);
+	}
 }

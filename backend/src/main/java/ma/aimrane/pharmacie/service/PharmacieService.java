@@ -22,13 +22,13 @@ public class PharmacieService implements IDao<Pharmacie>{
 	}
 
 	@Override
-	public void update(Pharmacie o) {
+	public Pharmacie update(int id, Pharmacie o) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public void delete(Pharmacie o) {
+	public void delete(int id) {
 		// TODO Auto-generated method stub
 		
 	}

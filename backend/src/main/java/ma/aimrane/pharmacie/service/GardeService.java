@@ -19,16 +19,10 @@ public class GardeService implements IDao<Garde>{
 	public Garde save(Garde o) {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}	
 
 	@Override
-	public void update(Garde o) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(Garde o) {
+	public void delete(int id) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -48,5 +42,11 @@ public class GardeService implements IDao<Garde>{
 	public Garde findByType(String type) {
 		// TODO Auto-generated method stub
 		return gardeRepository.findByType(type);
+	}
+
+	@Override
+	public Garde update(int id, Garde o) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

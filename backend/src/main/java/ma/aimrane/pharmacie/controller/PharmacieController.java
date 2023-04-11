@@ -14,7 +14,7 @@ import ma.aimrane.pharmacie.entity.Pharmacie;
 import ma.aimrane.pharmacie.entity.Pharmacie_garde;
 import ma.aimrane.pharmacie.entity.Ville;
 import ma.aimrane.pharmacie.entity.Zone;
-import ma.aimrane.pharmacie.repository.Pharmacie_gardeRepository;
+import ma.aimrane.pharmacie.repository.PharmacieGardeRepository;
 import ma.aimrane.pharmacie.service.GardeService;
 import ma.aimrane.pharmacie.service.PharmacieGardService;
 import ma.aimrane.pharmacie.service.PharmacieService;
@@ -31,7 +31,7 @@ public class PharmacieController {
 	@Autowired
 	private PharmacieGardService pharmaciegardeService;
 	@Autowired
-	private Pharmacie_gardeRepository pharmacie_GardRepository;
+	private PharmacieGardeRepository pharmacie_GardRepository;
 	@Autowired
 	private GardeService gardeService;
 	
@@ -75,19 +75,16 @@ public class PharmacieController {
 		
 		for (Zone z : zones) {
 	        if (z.getId() == Integer.parseInt(zoneId)) {
-	        	for (Pharmacie p : z.getPharmacies()) {
-	        		listParmacieGarde = pharmacie_GardRepository.findByGardePharmcaie(garde, p);
-	        	}
+//	        	for (Pharmacie p : z.getPharmacies()) {
+//	        		listParmacieGarde = pharmacie_GardRepository.findByGardePharmcaie(garde, p);
+//	        	}
 	        }
 	    }
 
 		for (Pharmacie_garde phg : listParmacieGarde) {
 			ph.add(phg.getPharmacie());	        	
 	    }
-		
-		
-		
-		
+
 		
 		return ph;
 	}

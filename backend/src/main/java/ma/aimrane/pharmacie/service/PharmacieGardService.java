@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 import ma.aimrane.pharmacie.dao.IDao;
 import ma.aimrane.pharmacie.entity.Pharmacie;
-import ma.aimrane.pharmacie.repository.Pharmacie_gardeRepository;
+import ma.aimrane.pharmacie.repository.PharmacieGardeRepository;
 
 @Service
 public class PharmacieGardService implements IDao<Pharmacie>{
 	@Autowired
-	Pharmacie_gardeRepository pharmacie_gardeRepository;
+	private PharmacieGardeRepository pharmacieGardeRepository;
 
 	@Override
 	public Pharmacie save(Pharmacie o) {
@@ -21,13 +21,13 @@ public class PharmacieGardService implements IDao<Pharmacie>{
 	}
 
 	@Override
-	public void update(Pharmacie o) {
+	public Pharmacie update(int id, Pharmacie o) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public void delete(Pharmacie o) {
+	public void delete(int id) {
 		// TODO Auto-generated method stub
 		
 	}
