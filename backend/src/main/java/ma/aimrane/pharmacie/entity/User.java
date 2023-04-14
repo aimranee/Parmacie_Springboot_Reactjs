@@ -21,15 +21,16 @@ public class User {
 	private String email;
 	private String password;
 	private String prenom;
+	private String nom;
 	private String telephone;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role",
 	    joinColumns = {
-	            @JoinColumn(name = "user_id", referencedColumnName = "id")
+	    		@JoinColumn(name = "user_id", referencedColumnName = "id")
 	    },
 	    inverseJoinColumns = {
-	            @JoinColumn(name = "role_id", referencedColumnName = "id")
+	    		@JoinColumn(name = "role_id", referencedColumnName = "id")
 	    }
 	)
 	private List<Role> roles;
@@ -85,7 +86,13 @@ public class User {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
-	
-	
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}	
 	
 }

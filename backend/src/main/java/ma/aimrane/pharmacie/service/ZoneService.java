@@ -24,18 +24,17 @@ public class ZoneService implements IDao<Zone>{
 	
 
 	@Override
-	public void delete(int id) {
+	public void delete(Zone o) {
 		// TODO Auto-generated method stub
-		Zone zone = zoneRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Zone not found with id " + id));
+		Zone zone = zoneRepository.findById(o.getId());
+		if (zone != null)
 		zoneRepository.delete(zone);
 	}
 
 	@Override
 	public Zone findById(int id) {
 		// TODO Auto-generated method stub
-		return zoneRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Zone not found with id " + id));
+		return zoneRepository.findById(id);
 	}
 
 	@Override
@@ -50,14 +49,18 @@ public class ZoneService implements IDao<Zone>{
 	}
 
 	@Override
-	public Zone update(int id, Zone zoneUp) {
+	public void update(Zone zoneUp) {
 		// TODO Auto-generated method stub
-		Zone zone = zoneRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Zone not found with id " + id));
+		Zone zone = zoneRepository.findById(zoneUp.getId());
 		zone.setNom(zoneUp.getNom());
 		zone.setVille(zoneUp.getVille());
-		return zoneRepository.save(zone);
+		zoneRepository.save(zone);
 	}
+	
+	public List<Zone> findByNom(String nom){
+
+        return zoneRepository.findByNom(nom);
+    }
 
 	
 }

@@ -5,9 +5,9 @@ import java.util.List;
 public interface IDao<T> {
 	T save (T o);
 	
-	T update(int id, T o);
+	void update(T o);
 	
-	void delete(int id);
+	void delete(T id);
 	
 	T findById(int id);
 	

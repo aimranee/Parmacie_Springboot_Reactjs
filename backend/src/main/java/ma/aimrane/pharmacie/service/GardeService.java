@@ -13,30 +13,30 @@ import ma.aimrane.pharmacie.repository.GardeRepository;
 public class GardeService implements IDao<Garde>{
 
 	@Autowired
-	GardeRepository gardeRepository;
+	private GardeRepository gardeRepository;
 
 	@Override
 	public Garde save(Garde o) {
 		// TODO Auto-generated method stub
-		return null;
+		return gardeRepository.save(o);
 	}	
 
 	@Override
-	public void delete(int id) {
+	public void delete(Garde o) {
 		// TODO Auto-generated method stub
-		
+		gardeRepository.delete(o);
 	}
 
 	@Override
 	public Garde findById(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return gardeRepository.findById(id);
 	}
 
 	@Override
 	public List<Garde> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return gardeRepository.findAll();
 	}
 	
 	public Garde findByType(String type) {
@@ -45,8 +45,8 @@ public class GardeService implements IDao<Garde>{
 	}
 
 	@Override
-	public Garde update(int id, Garde o) {
+	public void update(Garde o) {
 		// TODO Auto-generated method stub
-		return null;
+		gardeRepository.save(o);
 	}
 }

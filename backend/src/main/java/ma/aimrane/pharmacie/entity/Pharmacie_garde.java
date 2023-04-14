@@ -2,6 +2,8 @@ package ma.aimrane.pharmacie.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -17,10 +19,12 @@ public class Pharmacie_garde {
 	
 	@ManyToOne
 	@JoinColumn(name = "pharmacie", insertable = false, updatable = false)
+	@JsonIgnore
 	private Pharmacie pharmacie;
 	
 	@ManyToOne
 	@JoinColumn(name = "garde", insertable = false, updatable = false)
+	@JsonIgnore
 	private Garde garde;
 
 	

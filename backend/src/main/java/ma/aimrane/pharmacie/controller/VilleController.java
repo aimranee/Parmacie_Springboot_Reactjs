@@ -3,6 +3,7 @@ package ma.aimrane.pharmacie.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,18 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ma.aimrane.pharmacie.service.VilleService;
 import ma.aimrane.pharmacie.entity.Ville;
-import ma.aimrane.pharmacie.entity.Zone;
-import ma.aimrane.pharmacie.repository.VilleRepository;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/villes")
 public class VilleController {
 	
 	@Autowired
 	private VilleService villeService;
 	
-	@GetMapping("")
+	@GetMapping("/")
 	public List<Ville> findAll() {
 		return villeService.findAll();
 	}
@@ -35,14 +35,14 @@ public class VilleController {
         return villeService.getVilleById(id);
     }
 
-    @PostMapping("")
+    @PostMapping("/save")
     public Ville createVille(@RequestBody Ville ville) {
         return villeService.save(ville);
     }
 
-    @PutMapping("/{id}")
-    public Ville updateVille(@PathVariable int id, @RequestBody Ville ville) {
-    	Ville exist = villeService.findById(id);
+    @PutMapping("/update")
+    public Ville updateVille(@RequestBody Ville ville) {
+    	Ville exist = villeService.findById(ville.getId());
         if (exist != null) {
         	exist.setNom(ville.getNom());
             return villeService.save(exist);
@@ -50,9 +50,13 @@ public class VilleController {
         return null;
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteVille(@PathVariable int id) {
-    	villeService.delete(id);
+    	Ville exist = villeService.findById(id);
+        if (exist != null) {
+        	villeService.delete(exist);
+        }
+    	
     }
 	
 }

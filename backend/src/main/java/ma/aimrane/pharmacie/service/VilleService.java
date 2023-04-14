@@ -26,16 +26,21 @@ public class VilleService implements IDao<Ville>{
 	}
 
 	@Override
-	public Ville update(int id, Ville villeUp) {
+	public void update(Ville villeUp) {
 		// TODO Auto-generated method stub
-		Ville ville = villeRepository.findById(id);
-		ville.setNom(villeUp.getNom());
-		return villeRepository.save(ville);
+		Ville ville = villeRepository.findById(villeUp.getId());
+		if (ville!=null) {
+			ville.setNom(villeUp.getNom());
+			villeRepository.save(ville);
+		}
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(Ville villeUp) {
 		// TODO Auto-generated method stub
+		Ville ville = villeRepository.findById(villeUp.getId());
+		if (ville!=null)
+			villeRepository.delete(villeUp);
 	}
 
 	@Override
