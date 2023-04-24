@@ -2,7 +2,7 @@ package ma.aimrane.pharmacie.entity;
 
 import java.util.List;
 
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +18,7 @@ public class Ville {
 	private int id;
 	private String nom;
 	
-	@OneToMany(mappedBy = "ville", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "ville", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Zone> zones;
 	
 	public Ville() {

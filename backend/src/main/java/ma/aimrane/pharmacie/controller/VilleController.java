@@ -25,7 +25,7 @@ public class VilleController {
 	@Autowired
 	private VilleService villeService;
 	
-	@GetMapping("/")
+	@GetMapping("")
 	public List<Ville> findAll() {
 		return villeService.findAll();
 	}
