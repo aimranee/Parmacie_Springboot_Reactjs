@@ -15,6 +15,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
 import Modal from "@mui/material/Modal";
 import AddVille from "./AddVille";
+import EditVille from "./EditVille";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 const style = {
@@ -31,13 +32,21 @@ const style = {
 
 export default function ListVille() {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
   const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(false);
+  const [editopen, setEditOpen] = useState(false);
+  const [formid, setFormid] = useState("");
   const handleOpen = () => setOpen(true);
+  const handleEditOpen = () => setEditOpen(true);
   const handleClose = () => setOpen(false);
+  const handleEditClose = () => setEditOpen(false);
 
   useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = () => {
     axios
       .get("/api/villes")
       .then((response) => {
@@ -46,7 +55,26 @@ export default function ListVille() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  };
+  const reloadData = () => {
+    axios
+      .get("/api/villes")
+      .then((response) => {
+        setRows(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const editData = (id, nom) => {
+    const data = {
+      id: id,
+      nom: nom,
+    };
+    setFormid(data);
+    handleEditOpen();
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -74,7 +102,9 @@ export default function ListVille() {
           .catch((error) => {
             console.log(error);
           });
+
         Swal.fire("Deleted!", "Your item has been deleted.", "success");
+        reloadData();
       }
     });
   };
@@ -82,7 +112,6 @@ export default function ListVille() {
   return (
     <>
       <div>
-        <Button onClick={handleOpen}>Open modal</Button>
         <Modal
           open={open}
           onClose={handleClose}
@@ -90,7 +119,21 @@ export default function ListVille() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <AddVille CloseEvent={handleClose} />
+            <AddVille closeEvent={handleClose} onClick={reloadData} />
+          </Box>
+        </Modal>
+        <Modal
+          open={editopen}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <EditVille
+              closeEvent={handleEditClose}
+              onClick={reloadData}
+              fid={formid}
+            />
           </Box>
         </Modal>
       </div>
@@ -110,15 +153,15 @@ export default function ListVille() {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell align="left" style={{ minWidth: "50px" }}>
+                <TableCell align="left" style={{ minWidth: "70px" }}>
                   Id
                 </TableCell>
-                <TableCell align="left" style={{ minWidth: "100px" }}>
+                <TableCell align="left" style={{ minWidth: "200px" }}>
                   Nom
                 </TableCell>
                 <TableCell
                   align="left"
-                  style={{ minWidth: "100px" }}
+                  style={{ minWidth: "30px" }}
                 ></TableCell>
               </TableRow>
             </TableHead>
@@ -143,6 +186,9 @@ export default function ListVille() {
                               cursor: "pointer",
                             }}
                             className="cursor-pointer"
+                            onClick={() => {
+                              editData(row.id, row.nom);
+                            }}
                           />
                           <DeleteIcon
                             style={{

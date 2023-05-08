@@ -22,7 +22,6 @@ export default function AddVille({ closeEvent }) {
     const data = {
       nom: nom,
     };
-    // closeEvent();
 
     addData(data)
       .then(() => {
@@ -43,6 +42,7 @@ export default function AddVille({ closeEvent }) {
           confirmButtonText: "OK",
         });
       });
+    closeEvent();
   };
   const handleNameChange = (event) => {
     setNom(event.target.value);
