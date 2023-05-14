@@ -16,7 +16,7 @@ import ma.aimrane.pharmacie.entity.Pharmacie;
 import ma.aimrane.pharmacie.service.PharmacieService;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/pharmacies")
 @CrossOrigin
 public class PharmacieController {
 
@@ -81,7 +81,7 @@ public class PharmacieController {
         pharmacieService.save(pharmacie);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<Pharmacie> findAll(){
         return pharmacieService.findAll();
     }

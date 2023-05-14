@@ -34,16 +34,15 @@ public class ZoneController {
 		return zoneService.findByVilleId(v.getId());
 	}
 	
-	@GetMapping("/")
+	@GetMapping("")
     public List<Zone> findAll(){
-        return  zoneService.findAll();
+        return zoneService.findAll();
     }
 
     @PostMapping("/save")
     public void save(@RequestBody Zone zone){
         zoneService.save(zone);
     }
-
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable int id){
