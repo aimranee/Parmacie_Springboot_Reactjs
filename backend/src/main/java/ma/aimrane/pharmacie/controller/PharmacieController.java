@@ -1,19 +1,20 @@
 package ma.aimrane.pharmacie.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 
+import ma.aimrane.pharmacie.entity.Zone;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 import ma.aimrane.pharmacie.entity.Pharmacie;
 import ma.aimrane.pharmacie.service.PharmacieService;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("api/pharmacies")
@@ -77,7 +78,33 @@ public class PharmacieController {
 //	}
 	
 	@PostMapping("/save")
-    public void save(@RequestBody Pharmacie pharmacie){
+    public void save(@RequestParam("image") MultipartFile image,
+                     @RequestParam("nom") String nom,
+                     @RequestParam("adresse") String adresse,
+                     @RequestParam("latitude") double latitude,
+                     @RequestParam("zone") int zoneid,
+                     @RequestParam("longitude") double longitude) {
+
+        Pharmacie pharmacie = new Pharmacie();
+        pharmacie.setNom(nom);
+        pharmacie.setAdresse(adresse);
+        pharmacie.setLatitude(latitude);
+        Zone zone = new Zone();
+        zone.setId(zoneid);
+        pharmacie.setZone(zone);
+        pharmacie.setLongitude(longitude);
+
+
+        try {
+            String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+            if (fileName.contains("..")){
+                System.out.println("not a valide file");
+            }
+            pharmacie.setPhoto(Base64.getEncoder().encodeToString(image.getBytes()));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         pharmacieService.save(pharmacie);
     }
 
