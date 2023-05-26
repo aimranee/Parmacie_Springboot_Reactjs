@@ -18,12 +18,12 @@ export default function EditVille({ fid, closeEvent }) {
   async function editData(data) {
     try {
       const response = await axios.put("/api/villes/update", data);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
     }
   }
+
   const createVille = (e) => {
     e.preventDefault();
     const data = {
@@ -51,9 +51,11 @@ export default function EditVille({ fid, closeEvent }) {
       });
     closeEvent();
   };
+  
   const handleNameChange = (event) => {
     setNom(event.target.value);
   };
+
   return (
     <>
       <Box sx={{ m: 2 }} />

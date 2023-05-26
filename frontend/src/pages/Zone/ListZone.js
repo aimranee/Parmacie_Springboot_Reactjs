@@ -34,6 +34,7 @@ export default function ListZone() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const [rows, setRows] = useState([]);
+  const [villes, setVilles] = useState([]);
   const [open, setOpen] = useState(false);
   const [editopen, setEditOpen] = useState(false);
   const [formid, setFormid] = useState("");
@@ -43,19 +44,9 @@ export default function ListZone() {
   const handleEditClose = () => setEditOpen(false);
 
   useEffect(() => {
-    loadData();
+    reloadData();
   }, []);
 
-  const loadData = () => {
-    axios
-      .get("/api/zones")
-      .then((response) => {
-        setRows(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   const reloadData = () => {
     axios
       .get("/api/zones")
@@ -67,10 +58,11 @@ export default function ListZone() {
       });
   };
 
-  const editData = (id, nom) => {
+  const editData = (id, nom, ville) => {
     const data = {
       id: id,
       nom: nom,
+      ville: ville,
     };
     setFormid(data);
     handleEditOpen();
@@ -86,8 +78,9 @@ export default function ListZone() {
   };
 
   const handleDelete = (id) => {
+    console.log(id);
     Swal.fire({
-      title: "Are you sure you want to delete this item?",
+      title: "Are you sure you want to delete this zone?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
@@ -98,13 +91,14 @@ export default function ListZone() {
       if (result.isConfirmed) {
         axios
           .delete(`/api/zones/delete/${id}`)
-          .then(() => {})
+          .then(() => {
+            reloadData();
+          })
           .catch((error) => {
             console.log(error);
           });
 
         Swal.fire("Deleted!", "Your item has been deleted.", "success");
-        reloadData();
       }
     });
   };
@@ -181,7 +175,7 @@ export default function ListZone() {
                         {row.nom}
                       </TableCell>
                       <TableCell key={row.id} align="left">
-                        {/* {row.nom} */}
+                        {row.ville.nom}
                       </TableCell>
                       <TableCell key={row.id} align="left">
                         <Stack spacing={2} direction={"row"}>
@@ -193,7 +187,7 @@ export default function ListZone() {
                             }}
                             className="cursor-pointer"
                             onClick={() => {
-                              editData(row.id, row.nom);
+                              editData(row.id, row.nom, row.ville);
                             }}
                           />
                           <DeleteIcon

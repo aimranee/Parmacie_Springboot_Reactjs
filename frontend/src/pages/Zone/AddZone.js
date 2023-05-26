@@ -3,15 +3,29 @@ import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+
 import Swal from "sweetalert2";
 import axios from "axios";
 
 export default function AddZone({ closeEvent }) {
   const [nom, setNom] = useState("");
+  const [villes, setVilles] = useState([]);
+  const [ville, setVille] = useState([]);
+  const [villeId, setVilleId] = useState("");
+  useEffect(() => {
+    getVilles();
+  }, []);
+  async function getVilles() {
+    axios
+      .get("/api/villes")
+      .then((response) => setVilles(response.data))
+      .catch((error) => console.error(error));
+  }
+
   async function addData(data) {
     try {
       const response = await axios.post("/api/zones/save", data);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -21,6 +35,9 @@ export default function AddZone({ closeEvent }) {
     e.preventDefault();
     const data = {
       nom: nom,
+      ville: {
+        id: villeId,
+      },
     };
 
     addData(data)
@@ -47,6 +64,10 @@ export default function AddZone({ closeEvent }) {
   const handleNameChange = (event) => {
     setNom(event.target.value);
   };
+  const handleVilleChange = (event) => {
+    setVilleId(event.target.value);
+  };
+
   return (
     <>
       <Box sx={{ m: 2 }} />
@@ -69,6 +90,26 @@ export default function AddZone({ closeEvent }) {
           onChange={handleNameChange}
           sx={{ minWidth: "100%" }}
         />
+      </Grid>
+      <Box sx={{ m: 2 }} />
+
+      <Grid item xs={6}>
+        <TextField
+          id="outlined-basic"
+          label="Ville"
+          select
+          variant="outlined"
+          size="small"
+          value={villeId}
+          onChange={handleVilleChange}
+          sx={{ minWidth: "100%" }}
+        >
+          {villes.map((ville) => (
+            <MenuItem key={ville.id} value={ville.id}>
+              {ville.nom}
+            </MenuItem>
+          ))}
+        </TextField>
       </Grid>
       <Box sx={{ m: 2 }} />
 

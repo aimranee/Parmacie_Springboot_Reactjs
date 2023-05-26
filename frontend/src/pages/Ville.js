@@ -13,7 +13,7 @@ export default function Ville() {
         <Box sx={{ display: "flex" }}>
           <Sidenav />
           <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-            <ListVille/>
+            <ListVille />
           </Box>
         </Box>
       </div>

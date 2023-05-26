@@ -67,10 +67,14 @@ export default function ListPharmacie() {
       });
   };
 
-  const editData = (id, nom) => {
+  const editData = (id, nom, adresse, latitude, longitude, photo) => {
     const data = {
       id: id,
       nom: nom,
+      adresse: adresse,
+      latitude: latitude,
+      longitude: longitude,
+      photo: photo,
     };
     setFormid(data);
     handleEditOpen();
@@ -156,16 +160,19 @@ export default function ListPharmacie() {
                 <TableCell align="left" style={{ minWidth: "70px" }}>
                   Id
                 </TableCell>
-                <TableCell align="left" style={{ minWidth: "200px" }}>
+                <TableCell align="left" style={{ minWidth: "60px" }}>
+                  Image
+                </TableCell>
+                <TableCell align="left" style={{ minWidth: "60px" }}>
                   Adresse
                 </TableCell>
-                <TableCell align="left" style={{ minWidth: "200px" }}>
+                <TableCell align="left" style={{ minWidth: "60px" }}>
                   Latitude
                 </TableCell>
-                <TableCell align="left" style={{ minWidth: "200px" }}>
+                <TableCell align="left" style={{ minWidth: "60px" }}>
                   Longitude
                 </TableCell>
-                <TableCell align="left" style={{ minWidth: "200px" }}>
+                <TableCell align="left" style={{ minWidth: "60px" }}>
                   Nom
                 </TableCell>
                 <TableCell
@@ -175,54 +182,66 @@ export default function ListPharmacie() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1}>
-                      <TableCell key={row.id} align="left">
-                        {row.id}
-                      </TableCell>
-                      <TableCell key={row.id} align="left">
-                        {row.adresse}
-                      </TableCell>
-                      <TableCell key={row.id} align="left">
-                        {row.latitude}
-                      </TableCell>
-                      <TableCell key={row.id} align="left">
-                        {row.longitude}
-                      </TableCell>
-                      <TableCell key={row.id} align="left">
-                        {row.nom}
-                      </TableCell>
-                      <TableCell key={row.id} align="left">
-                        <Stack spacing={2} direction={"row"}>
-                          <EditIcon
-                            style={{
-                              fontSize: "20px",
-                              color: "blue",
-                              cursor: "pointer",
-                            }}
-                            className="cursor-pointer"
-                            onClick={() => {
-                              editData(row.id, row.nom);
-                            }}
-                          />
-                          <DeleteIcon
-                            style={{
-                              fontSize: "20px",
-                              color: "darkred",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => {
-                              handleDelete(row.id);
-                            }}
-                          />
-                        </Stack>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+              {rows.map((row) => {
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1}>
+                    <TableCell key={row.id} align="left">
+                      {row.id}
+                    </TableCell>
+                    <TableCell key={row.id} align="left">
+                      <img
+                        src={`data:image;base64,${row.photo}`}
+                        alt="Image"
+                        style={{ maxWidth: "100px" }}
+                      />
+                    </TableCell>
+                    <TableCell key={row.id} align="left">
+                      {row.adresse}
+                    </TableCell>
+                    <TableCell key={row.id} align="left">
+                      {row.latitude}
+                    </TableCell>
+                    <TableCell key={row.id} align="left">
+                      {row.longitude}
+                    </TableCell>
+                    <TableCell key={row.id} align="left">
+                      {row.nom}
+                    </TableCell>
+                    <TableCell key={row.id} align="left">
+                      <Stack spacing={2} direction={"row"}>
+                        <EditIcon
+                          style={{
+                            fontSize: "20px",
+                            color: "blue",
+                            cursor: "pointer",
+                          }}
+                          className="cursor-pointer"
+                          onClick={() => {
+                            editData(
+                              row.id,
+                              row.nom,
+                              row.adresse,
+                              row.latitude,
+                              row.longitude,
+                              row.photo
+                            );
+                          }}
+                        />
+                        <DeleteIcon
+                          style={{
+                            fontSize: "20px",
+                            color: "darkred",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            handleDelete(row.id);
+                          }}
+                        />
+                      </Stack>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
@@ -231,7 +250,7 @@ export default function ListPharmacie() {
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
-          page={page}
+          // page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />

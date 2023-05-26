@@ -5,20 +5,34 @@ import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Swal from "sweetalert2";
 import axios from "axios";
+import MenuItem from "@mui/material/MenuItem";
 
 export default function EditZone({ fid, closeEvent }) {
+  const [nom, setNom] = useState("");
+  const [id, setId] = useState("");
+  const [villes, setVilles] = useState([]);
+  const [ville, setVille] = useState([]);
+  const [villeId, setVilleId] = useState("");
+  const [villeName, setVilleName] = useState("");
+
   useEffect(() => {
     setNom(fid.nom);
     setId(fid.id);
+    setVilleId(fid.ville.id);
+    setVilleName(fid.ville.nom);
+    getVilles();
   }, []);
 
-  const [nom, setNom] = useState("");
-  const [id, setId] = useState("");
+  async function getVilles() {
+    axios
+      .get("/api/villes")
+      .then((response) => setVilles(response.data))
+      .catch((error) => console.error(error));
+  }
 
   async function editData(data) {
     try {
       const response = await axios.put("/api/zones/update", data);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -29,6 +43,9 @@ export default function EditZone({ fid, closeEvent }) {
     const data = {
       nom: nom,
       id: id,
+      ville: {
+        id: villeId,
+      },
     };
     editData(data)
       .then(() => {
@@ -54,6 +71,10 @@ export default function EditZone({ fid, closeEvent }) {
   const handleNameChange = (event) => {
     setNom(event.target.value);
   };
+  const handleVilleChange = (event) => {
+    setVilleId(event.target.value);
+  };
+
   return (
     <>
       <Box sx={{ m: 2 }} />
@@ -76,6 +97,26 @@ export default function EditZone({ fid, closeEvent }) {
           onChange={handleNameChange}
           sx={{ minWidth: "100%" }}
         />
+      </Grid>
+      <Box sx={{ m: 2 }} />
+
+      <Grid item xs={6}>
+        <TextField
+          id="outlined-basic"
+          label="Ville"
+          select
+          variant="outlined"
+          size="small"
+          value={villeId}
+          onChange={handleVilleChange}
+          sx={{ minWidth: "100%" }}
+        >
+          {villes.map((ville) => (
+            <MenuItem key={ville.id} value={ville.id}>
+              {ville.nom}
+            </MenuItem>
+          ))}
+        </TextField>
       </Grid>
       <Box sx={{ m: 2 }} />
 

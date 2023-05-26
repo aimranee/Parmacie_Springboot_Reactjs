@@ -98,13 +98,13 @@ export default function ListVille() {
       if (result.isConfirmed) {
         axios
           .delete(`/api/villes/delete/${id}`)
-          .then(() => {})
+          .then(() => {
+            reloadData();
+          })
           .catch((error) => {
             console.log(error);
           });
-
         Swal.fire("Deleted!", "Your item has been deleted.", "success");
-        reloadData();
       }
     });
   };

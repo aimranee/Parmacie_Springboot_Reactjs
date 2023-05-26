@@ -46,12 +46,6 @@ export default function AddPharmacie({ closeEvent }) {
     formData.append("longitude", longitude);
     formData.append("zone", 1);
     formData.append("image", image);
-    // const file = event.target.files[0];
-    // formData.append("image", file);
-    // const file = event.target.image.files[0];
-    // if (file) {
-    //   formData.append("image", file);
-    // }
 
     try {
       await axios.post("/api/pharmacies/save", formData, {
