@@ -4,13 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 @Entity
 public class Zone {
@@ -21,17 +15,17 @@ public class Zone {
 	private String nom;
 	
 	@ManyToOne
-	@JsonIgnore
+	@JoinColumn(name = "ville_id")
 	private Ville ville;
 	
 	@OneToMany(mappedBy = "zone", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private List<Pharmacie> pharmacies;
 	
 
 	public Zone() {
 		super();
 	}
-
 
 	public int getId() {
 		return id;

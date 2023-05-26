@@ -26,9 +26,7 @@ public class ZoneService implements IDao<Zone>{
 	@Override
 	public void delete(Zone o) {
 		// TODO Auto-generated method stub
-		Zone zone = zoneRepository.findById(o.getId());
-		if (zone != null)
-		zoneRepository.delete(zone);
+		zoneRepository.delete(o);
 	}
 
 	@Override
@@ -55,6 +53,14 @@ public class ZoneService implements IDao<Zone>{
 		zone.setNom(zoneUp.getNom());
 		zone.setVille(zoneUp.getVille());
 		zoneRepository.save(zone);
+	}
+
+	public Zone updateNull(Zone zoneUp) {
+		// TODO Auto-generated method stub
+		Zone zone = zoneRepository.findById(zoneUp.getId());
+		zone.setNom(zoneUp.getNom());
+		zone.setVille(zoneUp.getVille());
+		return zoneRepository.save(zone);
 	}
 	
 	public List<Zone> findByNom(String nom){

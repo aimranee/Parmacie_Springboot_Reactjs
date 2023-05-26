@@ -19,9 +19,9 @@ public class Pharmacie {
 	@Lob
 	@Column(columnDefinition = "MEDIUMBLOB")
 	private String photo;
-	
+
+	@JoinColumn(name = "zone_id")
 	@ManyToOne
-	@JsonIgnore
 	private Zone zone;
 	
 	@OneToOne(fetch=FetchType.EAGER)
@@ -29,8 +29,8 @@ public class Pharmacie {
     @JsonIgnore
     private User user;
 	
-	@OneToMany(mappedBy = "pharmacie")
-    @JsonIgnore
+	@OneToMany(mappedBy = "pharmacie", fetch = FetchType.EAGER)
+	@JsonIgnore
     private List<Pharmacie_garde> pharmacieGardes;
 	
 	public Pharmacie() {

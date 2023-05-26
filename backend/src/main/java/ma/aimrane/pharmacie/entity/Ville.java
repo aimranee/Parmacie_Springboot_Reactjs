@@ -2,6 +2,8 @@ package ma.aimrane.pharmacie.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,7 +20,8 @@ public class Ville {
 	private int id;
 	private String nom;
 	
-	@OneToMany(mappedBy = "ville", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "ville", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private List<Zone> zones;
 	
 	public Ville() {

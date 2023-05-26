@@ -42,7 +42,5 @@ public class Pharmacie_garde_pk implements Serializable {
 	public void setDate_debut(Date date_debut) {
 		this.date_debut = date_debut;
 	}
-
-	
 	
 }

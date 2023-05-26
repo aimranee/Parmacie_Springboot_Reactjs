@@ -162,7 +162,7 @@ export default function ListVille() {
                 <TableCell
                   align="left"
                   style={{ minWidth: "30px" }}
-                ></TableCell>
+                >Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

@@ -94,7 +94,6 @@ public class PharmacieController {
         pharmacie.setZone(zone);
         pharmacie.setLongitude(longitude);
 
-
         try {
             String fileName = StringUtils.cleanPath(image.getOriginalFilename());
             if (fileName.contains("..")){
@@ -120,8 +119,36 @@ public class PharmacieController {
     }
 
     @PutMapping("/update")
-    public void update(@RequestBody Pharmacie p){
-        pharmacieService.update(p);
+    public void update(@RequestParam("image") MultipartFile image,
+                       @RequestParam("nom") String nom,
+                       @RequestParam("id") int id,
+                       @RequestParam("adresse") String adresse,
+                       @RequestParam("latitude") double latitude,
+                       @RequestParam("zone") int zoneid,
+                       @RequestParam("longitude") double longitude) {
+
+        Pharmacie pharmacie = new Pharmacie();
+        pharmacie.setId(id);
+        pharmacie.setNom(nom);
+        pharmacie.setAdresse(adresse);
+        pharmacie.setLatitude(latitude);
+        Zone zone = new Zone();
+        zone.setId(zoneid);
+        pharmacie.setZone(zone);
+        pharmacie.setLongitude(longitude);
+
+
+        try {
+            String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+            if (fileName.contains("..")){
+                System.out.println("not a valide file");
+            }
+            pharmacie.setPhoto(Base64.getEncoder().encodeToString(image.getBytes()));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        pharmacieService.update(pharmacie);
     }
 
 

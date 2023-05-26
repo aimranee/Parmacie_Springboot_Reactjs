@@ -24,7 +24,7 @@ public class GardeController {
 	@Autowired
     private GardeService gardeService;
 	
-	@GetMapping("/")
+	@GetMapping("")
     public List<Garde> findAll(){
         return gardeService.findAll();
     }

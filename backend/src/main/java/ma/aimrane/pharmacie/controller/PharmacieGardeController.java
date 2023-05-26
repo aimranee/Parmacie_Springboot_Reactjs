@@ -29,21 +29,23 @@ public class PharmacieGardeController {
 		pharmacieGardeService.save(pharmacieGarde);
 	}
 	
-	@GetMapping("/")
+	@GetMapping("")
 	public List<Pharmacie_garde> findAll(){
 	    return pharmacieGardeService.findAll();
 	}
 	
-	@DeleteMapping("/delete/{id}")
-	public void delete(@PathVariable int id){
-		Pharmacie_garde ph = pharmacieGardeService.findById(id);
-		if (ph != null)
-	    pharmacieGardeService.delete(ph);
+	@DeleteMapping("/delete")
+	public void delete(@RequestBody Pharmacie_garde pharmacieGarde){
+
+//		Pharmacie_garde ph = pharmacieGardeService.findById(id);
+//		if (ph != null){
+//
+			pharmacieGardeService.delete(pharmacieGarde);
+//		}
 	}
 	
 	@PutMapping("/update")
 	public void update(@RequestBody Pharmacie_garde o){
 		pharmacieGardeService.update(o);
 	}
-	    
 }

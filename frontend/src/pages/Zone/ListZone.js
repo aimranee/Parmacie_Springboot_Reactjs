@@ -156,10 +156,9 @@ export default function ListZone() {
                 <TableCell align="left" style={{ minWidth: "200px" }}>
                   Ville
                 </TableCell>
-                <TableCell
-                  align="left"
-                  style={{ minWidth: "30px" }}
-                ></TableCell>
+                <TableCell align="left" style={{ minWidth: "30px" }}>
+                  Action
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

@@ -8,6 +8,17 @@ import Swal from "sweetalert2";
 import axios from "axios";
 
 export default function EditPharmacie({ fid, closeEvent }) {
+  const [nom, setNom] = useState("");
+  const [id, setId] = useState("");
+  const [adresse, setAdresse] = useState("");
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+  const [villes, setVilles] = useState([]);
+  const [ville, setVille] = useState("");
+  const [zones, setZones] = useState([]);
+  const [zone, setZone] = useState("");
+  const [image, setImage] = useState(null);
+
   useEffect(() => {
     getVilles();
     setNom(fid.nom);
@@ -15,21 +26,10 @@ export default function EditPharmacie({ fid, closeEvent }) {
     setAdresse(fid.adresse);
     setLatitude(fid.latitude);
     setLongitude(fid.longitude);
-    //    setVille(fid.ville);
-    //   setZone(fid.zone);
+    setVille(fid.ville.id);
+    setZone(fid.zone.id);
     setImage(fid.photo);
   }, []);
-
-  const [nom, setNom] = useState("");
-  const [id, setId] = useState("");
-  const [adresse, setAdresse] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [villes, setVilles] = useState([]);
-  const [ville, setVille] = useState([]);
-  const [zones, setZones] = useState([]);
-  const [zone, setZone] = useState([]);
-  const [image, setImage] = useState(null);
 
   async function getVilles() {
     axios
@@ -185,7 +185,7 @@ export default function EditPharmacie({ fid, closeEvent }) {
             sx={{ minWidth: "100%" }}
           >
             {villes.map((ville) => (
-              <MenuItem key={ville.id} value={ville.nom}>
+              <MenuItem key={ville.id} value={ville.id}>
                 {ville.nom}
               </MenuItem>
             ))}
@@ -203,7 +203,7 @@ export default function EditPharmacie({ fid, closeEvent }) {
             sx={{ minWidth: "100%" }}
           >
             {zones.map((zone) => (
-              <MenuItem key={zone.id} value={zone.nom}>
+              <MenuItem key={zone.id} value={zone.id}>
                 {zone.nom}
               </MenuItem>
             ))}

@@ -45,10 +45,12 @@ public class ZoneController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable int id){
-        Zone z = zoneService.findById(id);
-        if(z != null)
-        zoneService.delete(z);
+    public void delete(@PathVariable int id) {
+        Zone exist = zoneService.findById(id);
+        if (exist != null) {
+            zoneService.delete(exist);
+        }
+
     }
 
     @PutMapping("/update")

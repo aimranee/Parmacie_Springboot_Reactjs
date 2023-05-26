@@ -178,7 +178,7 @@ export default function ListPharmacie() {
                 <TableCell
                   align="left"
                   style={{ minWidth: "30px" }}
-                ></TableCell>
+                >Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -223,7 +223,8 @@ export default function ListPharmacie() {
                               row.adresse,
                               row.latitude,
                               row.longitude,
-                              row.photo
+                              row.photo,
+                              
                             );
                           }}
                         />

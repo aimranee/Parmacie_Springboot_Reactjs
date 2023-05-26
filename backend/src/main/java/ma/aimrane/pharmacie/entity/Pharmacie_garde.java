@@ -19,12 +19,10 @@ public class Pharmacie_garde {
 	
 	@ManyToOne
 	@JoinColumn(name = "pharmacie", insertable = false, updatable = false)
-	@JsonIgnore
 	private Pharmacie pharmacie;
 	
 	@ManyToOne
 	@JoinColumn(name = "garde", insertable = false, updatable = false)
-	@JsonIgnore
 	private Garde garde;
 
 	

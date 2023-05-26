@@ -15,7 +15,7 @@ export default function AddPharmacie({ closeEvent }) {
   const [villes, setVilles] = useState([]);
   const [ville, setVille] = useState([]);
   const [zones, setZones] = useState([]);
-  const [zone, setZone] = useState([]);
+  const [zone, setZone] = useState("");
   const [image, setImage] = useState(null);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function AddPharmacie({ closeEvent }) {
     formData.append("adresse", adresse);
     formData.append("latitude", latitude);
     formData.append("longitude", longitude);
-    formData.append("zone", 1);
+    formData.append("zone", zone);
     formData.append("image", image);
 
     try {
@@ -192,7 +192,7 @@ export default function AddPharmacie({ closeEvent }) {
             sx={{ minWidth: "100%" }}
           >
             {zones.map((zone) => (
-              <MenuItem key={zone.id} value={zone.nom}>
+              <MenuItem key={zone.id} value={zone.id}>
                 {zone.nom}
               </MenuItem>
             ))}
