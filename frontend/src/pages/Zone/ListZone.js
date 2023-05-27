@@ -9,7 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import axios from "axios";
-import { Box, Button, Stack } from "@mui/material";
+import { Autocomplete, Box, Button, Stack, TextField } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
@@ -58,6 +58,14 @@ export default function ListZone() {
       });
   };
 
+  const filterData = (v) => {
+    if (v) {
+      setRows([v]);
+    } else {
+      reloadData();
+    }
+  };
+
   const editData = (id, nom, ville) => {
     const data = {
       id: id,
@@ -78,7 +86,6 @@ export default function ListZone() {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
     Swal.fire({
       title: "Are you sure you want to delete this zone?",
       text: "You won't be able to revert this!",
@@ -134,6 +141,17 @@ export default function ListZone() {
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <Box height={10} />
         <Stack direction={"row"} spacing={2} className="my-2 mb-2">
+          <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={rows}
+            sx={{ width: 300 }}
+            onChange={(e, v) => filterData(v)}
+            getOptionLabel={(rows) => rows.nom || ""}
+            renderInput={(params) => (
+              <TextField {...params} size="small" label="search" />
+            )}
+          />
           <Button
             variant="contained"
             endIcon={<AddCircleIcon />}

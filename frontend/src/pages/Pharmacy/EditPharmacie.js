@@ -26,7 +26,8 @@ export default function EditPharmacie({ fid, closeEvent }) {
     setAdresse(fid.adresse);
     setLatitude(fid.latitude);
     setLongitude(fid.longitude);
-    setVille(fid.ville.id);
+    setVille(fid.zone.ville.id);
+    getZones(fid.zone.ville.id);
     setZone(fid.zone.id);
     setImage(fid.photo);
   }, []);
@@ -40,8 +41,10 @@ export default function EditPharmacie({ fid, closeEvent }) {
 
   async function getZones(v) {
     axios
-      .get("/api/zones/ville/" + v)
-      .then((response) => setZones(response.data))
+      .get("/api/zones/villes/" + v + "/zones")
+      .then((response) => {
+        setZones(response.data);
+      })
       .catch((error) => console.error(error));
   }
 
@@ -55,7 +58,7 @@ export default function EditPharmacie({ fid, closeEvent }) {
     formData.append("adresse", adresse);
     formData.append("latitude", latitude);
     formData.append("longitude", longitude);
-    formData.append("zone", 1);
+    formData.append("zone", zone);
     formData.append("image", image);
 
     try {

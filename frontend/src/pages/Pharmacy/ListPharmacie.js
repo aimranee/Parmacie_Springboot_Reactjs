@@ -67,7 +67,7 @@ export default function ListPharmacie() {
       });
   };
 
-  const editData = (id, nom, adresse, latitude, longitude, photo) => {
+  const editData = (id, nom, adresse, latitude, longitude, photo, zone) => {
     const data = {
       id: id,
       nom: nom,
@@ -75,6 +75,7 @@ export default function ListPharmacie() {
       latitude: latitude,
       longitude: longitude,
       photo: photo,
+      zone: zone,
     };
     setFormid(data);
     handleEditOpen();
@@ -175,10 +176,9 @@ export default function ListPharmacie() {
                 <TableCell align="left" style={{ minWidth: "60px" }}>
                   Nom
                 </TableCell>
-                <TableCell
-                  align="left"
-                  style={{ minWidth: "30px" }}
-                >Action</TableCell>
+                <TableCell align="left" style={{ minWidth: "30px" }}>
+                  Action
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -192,7 +192,7 @@ export default function ListPharmacie() {
                       <img
                         src={`data:image;base64,${row.photo}`}
                         alt="Image"
-                        style={{ maxWidth: "100px" }}
+                        style={{ maxWidth: "70px" }}
                       />
                     </TableCell>
                     <TableCell key={row.id} align="left">
@@ -224,7 +224,7 @@ export default function ListPharmacie() {
                               row.latitude,
                               row.longitude,
                               row.photo,
-                              
+                              row.zone
                             );
                           }}
                         />

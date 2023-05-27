@@ -9,7 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import axios from "axios";
-import { Box, Button, Stack } from "@mui/material";
+import { Autocomplete, Box, Button, Stack, TextField } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
@@ -17,6 +17,7 @@ import Modal from "@mui/material/Modal";
 import AddVille from "./AddVille";
 import EditVille from "./EditVille";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { AutoComplete } from "antd";
 
 const style = {
   position: "absolute",
@@ -74,6 +75,14 @@ export default function ListVille() {
     };
     setFormid(data);
     handleEditOpen();
+  };
+
+  const filterData = (v) => {
+    if (v) {
+      setRows([v]);
+    } else {
+      loadData();
+    }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -140,6 +149,17 @@ export default function ListVille() {
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <Box height={10} />
         <Stack direction={"row"} spacing={2} className="my-2 mb-2">
+          <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={rows}
+            sx={{ width: 300 }}
+            onChange={(e, v) => filterData(v)}
+            getOptionLabel={(rows) => rows.nom || ""}
+            renderInput={(params) => (
+              <TextField {...params} size="small" label="search" />
+            )}
+          />
           <Button
             variant="contained"
             endIcon={<AddCircleIcon />}
@@ -159,10 +179,9 @@ export default function ListVille() {
                 <TableCell align="left" style={{ minWidth: "200px" }}>
                   Nom
                 </TableCell>
-                <TableCell
-                  align="left"
-                  style={{ minWidth: "30px" }}
-                >Action</TableCell>
+                <TableCell align="left" style={{ minWidth: "30px" }}>
+                  Action
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
